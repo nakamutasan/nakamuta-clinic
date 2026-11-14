@@ -1,0 +1,1425 @@
+/* =========================================
+   中牟田美容クリニック の見た目を決めるファイル
+   ========================================= */
+
+/* --- 1. 色と動き方の設定（ここを変えるとサイト全体が変わります） --- */
+:root {
+  --white: #fdfcfa;        /* 少し温かみのある白 */
+  --greige: #eee8e1;       /* グレージュ（灰色がかったベージュ） */
+  --greige-dark: #ddd3c7;  /* 濃いグレージュ（線など） */
+  --ink: #3b3632;          /* 文字色 */
+  --sub: #8a8178;          /* 薄い文字色 */
+  --gold: #b39566;         /* シャンパンゴールド */
+  --gold-light: #d9c7a4;   /* 明るいゴールド */
+  --line: #06c755;         /* LINE の緑 */
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* なめらかに止まる動き */
+  --en: "Cormorant Garamond", serif;      /* 英語の上品な文字 */
+  --mincho: "Shippori Mincho", serif;     /* 日本語の明朝体 */
+}
+
+/* --- 2. ページ全体 --- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* リンクで移動したとき、ヘッダーに隠れないように */
+}
+
+body {
+  margin: 0;
+  background-color: var(--white);
+  color: var(--ink);
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 2;
+  letter-spacing: 0.06em;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--mincho);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.container {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.container.narrow {
+  width: min(820px, calc(100% - 48px));
+}
+
+.small {
+  font-size: 0.8rem;
+  color: var(--sub);
+}
+
+.center {
+  text-align: center;
+}
+
+section {
+  padding: 140px 0;
+}
+
+/* 英語の小見出し（金色の斜体） */
+.section-en {
+  margin: 0 0 4px;
+  font-family: var(--en);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
+/* 日本語の大見出し */
+.section-title {
+  margin: 0 0 40px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.7;
+}
+
+/* アーチ型（上が丸い窓のような形）の写真 */
+.arch {
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+}
+
+.arch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- 3. ボタン --- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 14px 32px;
+  overflow: hidden;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+}
+
+/* マウスを乗せると、光がすーっと横切る */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.8s var(--ease);
+}
+
+.btn:hover::after {
+  left: 130%;
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: #fff;
+}
+
+.btn-gold:hover {
+  background-color: #9e8156;
+}
+
+.btn-line {
+  background-color: var(--line);
+  color: #fff;
+}
+
+.btn-outline {
+  border: 1px solid var(--ink);
+}
+
+.btn-outline:hover {
+  background-color: var(--ink);
+  color: var(--white);
+}
+
+/* --- 4. ヘッダー --- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  transition: background-color 0.5s, padding 0.5s, transform 0.5s var(--ease), box-shadow 0.5s;
+}
+
+/* スクロールすると、白いすりガラスの背景がつく */
+.header.is-scrolled {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: rgba(253, 252, 250, 0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--greige-dark);
+}
+
+/* 下にスクロールしている間は隠れて、上に戻すと出てくる */
+.header.is-hidden {
+  transform: translateY(-100%);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.logo-en {
+  font-family: var(--en);
+  font-size: 1.05rem;
+  letter-spacing: 0.2em;
+}
+
+.logo-ja {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--sub);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav ul {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+}
+
+/* リンクの下に、金色の線が真ん中から広がる */
+.nav ul a {
+  position: relative;
+}
+
+.nav ul a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background-color: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.5s var(--ease);
+}
+
+.nav ul a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-reserve {
+  min-width: 0;
+  padding: 10px 26px;
+}
+
+/* スマホ用のメニューボタン（パソコンでは隠す） */
+.menu-toggle {
+  display: none;
+  position: relative;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background-color: var(--ink);
+  transition: transform 0.5s var(--ease), top 0.5s var(--ease);
+}
+
+.menu-toggle span:nth-child(1) { top: 18px; }
+.menu-toggle span:nth-child(2) { top: 26px; }
+
+/* 開いているときは「×」の形に */
+body.menu-open .menu-toggle span:nth-child(1) { top: 22px; transform: rotate(20deg); }
+body.menu-open .menu-toggle span:nth-child(2) { top: 22px; transform: rotate(-20deg); }
+
+/* --- 5. トップ --- */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  min-height: 100vh;
+  padding: 120px max(40px, calc((100% - 1200px) / 2)) 80px;
+  background: linear-gradient(180deg, var(--white) 0%, var(--greige) 100%);
+}
+
+.hero-en {
+  margin: 0 0 24px;
+  font-family: var(--en);
+  font-weight: 300;
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.hero-en em {
+  color: var(--gold);
+}
+
+.hero h1 {
+  margin: 0 0 24px;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1.9;
+}
+
+.hero-lead {
+  margin: 0 0 40px;
+  color: var(--sub);
+  font-size: 0.9rem;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-buttons.center {
+  justify-content: center;
+}
+
+.hero-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image .arch {
+  width: min(440px, 100%);
+  height: min(640px, 72vh);
+}
+
+/* 写真の横の、縦書きの英字 */
+.hero-vertical {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-family: var(--en);
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  color: var(--sub);
+}
+
+/* 下にスクロールをうながす線 */
+.scroll-down {
+  position: absolute;
+  left: 40px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--en);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--sub);
+}
+
+.scroll-down span {
+  writing-mode: vertical-rl;
+}
+
+.scroll-down::after {
+  content: "";
+  width: 1px;
+  height: 70px;
+  background: linear-gradient(var(--gold), var(--gold)) no-repeat top / 100% 0%;
+  background-color: var(--greige-dark);
+  animation: scrollLine 2.4s var(--ease) infinite;
+}
+
+@keyframes scrollLine {
+  0%   { background-size: 100% 0%;   background-position: top; }
+  50%  { background-size: 100% 100%; background-position: top; }
+  51%  { background-size: 100% 100%; background-position: bottom; }
+  100% { background-size: 100% 0%;   background-position: bottom; }
+}
+
+/* --- 6. お知らせ --- */
+.news {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--greige-dark);
+}
+
+.news-inner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+}
+
+.news-title {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.news-title .en {
+  display: block;
+  font-family: var(--en);
+  font-style: italic;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.news-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.news-list li {
+  display: flex;
+  gap: 32px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--greige);
+  font-size: 0.88rem;
+}
+
+.news-list time {
+  font-family: var(--en);
+  font-size: 1rem;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* --- 7. 想い --- */
+.concept-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.concept-image .arch {
+  height: 600px;
+}
+
+.concept-image img {
+  height: 115%; /* ゆっくり動かす分、少し大きめにしておく */
+  object-position: 28% center; /* 顔が真ん中に来るように */
+}
+
+.values {
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.values li {
+  display: flex;
+  gap: 24px;
+  padding: 24px 0;
+  border-top: 1px solid var(--greige-dark);
+}
+
+.values .num {
+  font-family: var(--en);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.values h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.values p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--sub);
+}
+
+/* --- 8. 施術メニュー --- */
+.menu {
+  background-color: var(--greige);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.menu-card {
+  background-color: var(--white);
+  transition: box-shadow 0.6s var(--ease), translate 0.6s var(--ease);
+}
+
+.menu-card:hover {
+  translate: 0 -6px;
+  box-shadow: 0 30px 50px -20px rgba(59, 54, 50, 0.25);
+}
+
+.menu-image {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.menu-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+
+.menu-card:hover .menu-image img {
+  transform: scale(1.07);
+}
+
+.menu-body {
+  position: relative;
+  padding: 32px 28px 36px;
+}
+
+/* カードの上の金色の線（マウスを乗せると左から伸びる） */
+.menu-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease);
+}
+
+.menu-card:hover .menu-body::before {
+  transform: scaleX(1);
+}
+
+.menu-en {
+  margin: 0;
+  font-family: var(--en);
+  font-style: italic;
+  color: var(--gold);
+}
+
+.menu-body h3 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.menu-body > p {
+  margin: 0 0 20px;
+  font-size: 0.86rem;
+}
+
+.menu-detail {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--greige);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.menu-detail dt {
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.menu-detail dd {
+  margin: 0;
+}
+
+/* --- 9. 料金 --- */
+.price-table {
+  margin-bottom: 32px;
+}
+
+/* 項目と金額のあいだを、点線でつなぐ */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--greige);
+}
+
+.price-row .dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--greige-dark);
+}
+
+.price-row .yen {
+  font-family: var(--en);
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+
+.notes {
+  margin: 0;
+  padding: 24px 28px;
+  list-style: none;
+  background-color: var(--greige);
+  font-size: 0.8rem;
+  line-height: 1.9;
+}
+
+.notes li::before {
+  content: "※";
+  margin-right: 4px;
+  color: var(--gold);
+}
+
+/* --- 10. 院内の写真の帯 --- */
+.interior {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 70vh;
+  min-height: 420px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.interior-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.interior-bg img {
+  width: 100%;
+  height: 130%; /* ゆっくり動かす分、大きめに */
+  object-fit: cover;
+}
+
+/* 写真の上にうすい白を重ねて、文字を読みやすく */
+.interior::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(253, 252, 250, 0.35);
+}
+
+.interior-copy {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--mincho);
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
+.interior-copy .en {
+  display: block;
+  font-family: var(--en);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+/* --- 11. 初めての方へ --- */
+.first-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 80px;
+}
+
+.first-head {
+  position: sticky; /* 右の流れを読んでいる間、左側は止まって見える */
+  top: 120px;
+  align-self: start;
+}
+
+.first-image {
+  margin-top: 32px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.first-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flow {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 40px;
+  list-style: none;
+}
+
+/* 左側の縦の線（スクロールに合わせて金色に塗られていく） */
+.flow::before,
+.flow::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 1px;
+}
+
+.flow::before {
+  background-color: var(--greige-dark);
+}
+
+.flow::after {
+  background-color: var(--gold);
+  transform-origin: top;
+  transform: scaleY(var(--flow, 0));
+}
+
+.flow li {
+  position: relative;
+  padding: 0 0 56px;
+}
+
+/* 線の上の丸 */
+.flow li::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: -45px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background-color: var(--white);
+}
+
+.flow .step {
+  font-family: var(--en);
+  font-style: italic;
+  color: var(--gold);
+}
+
+.flow h3 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.flow p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--sub);
+}
+
+/* --- 12. 医師紹介 --- */
+.doctor {
+  background-color: var(--greige);
+}
+
+.doctor-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  padding: 56px;
+  background-color: var(--white);
+}
+
+.doctor-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--gold-light);
+  border-radius: 999px 999px 0 0; /* 写真の代わりに、アーチ型の枠 */
+  text-align: center;
+}
+
+.doctor-name p {
+  margin: 0;
+}
+
+.doctor-role {
+  font-size: 0.8rem;
+  color: var(--sub);
+}
+
+.doctor-ja {
+  font-family: var(--mincho);
+  font-size: 1.8rem;
+  letter-spacing: 0.3em;
+}
+
+.doctor-en {
+  font-family: var(--en);
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+
+.doctor-message {
+  margin: 0 0 24px;
+  font-family: var(--mincho);
+  font-size: 1.05rem;
+  line-height: 2.2;
+}
+
+.doctor-career {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+}
+
+.doctor-career dt {
+  color: var(--gold);
+}
+
+.doctor-career dd {
+  margin: 0;
+}
+
+/* --- 13. よくある質問 --- */
+.faq-list details {
+  border-bottom: 1px solid var(--greige-dark);
+}
+
+.faq-list summary {
+  position: relative;
+  padding: 24px 48px 24px 40px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--mincho);
+  font-size: 1rem;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 質問の前の「Q」 */
+.faq-list summary::before {
+  content: "Q";
+  position: absolute;
+  left: 0;
+  top: 18px;
+  font-family: var(--en);
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+
+/* 右側の「＋」（開くと「－」に） */
+.faq-list summary::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  translate: 0 -50%;
+  background:
+    linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat,
+    linear-gradient(var(--gold), var(--gold)) center / 1px 100% no-repeat;
+  transition: transform 0.5s var(--ease);
+}
+
+.faq-list details[open] summary::after {
+  transform: rotate(90deg);
+  background:
+    linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat;
+}
+
+.answer {
+  padding: 0 0 24px 40px;
+  color: var(--sub);
+  font-size: 0.9rem;
+}
+
+.answer p {
+  margin: 0;
+}
+
+/* 開いたとき、答えがふわっと出てくる */
+.faq-list details[open] .answer {
+  animation: answerIn 0.6s var(--ease);
+}
+
+@keyframes answerIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- 14. 診療時間・アクセス --- */
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+
+.hours {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.hours caption {
+  margin-bottom: 12px;
+  font-family: var(--mincho);
+  text-align: left;
+}
+
+.hours th,
+.hours td {
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--greige-dark);
+  font-weight: 400;
+}
+
+.hours thead th {
+  background-color: var(--greige);
+}
+
+.hours tbody th {
+  white-space: nowrap;
+  text-align: left;
+}
+
+.hours td {
+  color: var(--gold);
+}
+
+.hours td.off {
+  color: var(--sub);
+}
+
+.access-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 24px;
+  margin: 32px 0 0;
+  font-size: 0.88rem;
+}
+
+.access-info dt {
+  color: var(--gold);
+}
+
+.access-info dd {
+  margin: 0;
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+  filter: grayscale(0.6) sepia(0.15); /* 地図の色を、サイトに合わせて落ち着かせる */
+}
+
+/* --- 15. 予約のお誘い --- */
+.cta {
+  background-color: var(--ink);
+  color: var(--white);
+  text-align: center;
+}
+
+.cta-en {
+  margin: 0;
+  font-family: var(--en);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+}
+
+.cta h2 {
+  margin: 0 0 16px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.cta p {
+  margin: 0 0 40px;
+}
+
+.cta .btn-outline {
+  border-color: var(--white);
+}
+
+.cta .btn-outline:hover {
+  background-color: var(--white);
+  color: var(--ink);
+}
+
+/* --- 16. フッター --- */
+.footer {
+  padding: 56px 24px 40px;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer .logo-ja {
+  margin-bottom: 24px;
+}
+
+/* --- 17. スマホ用の下の予約ボタン（パソコンでは隠す） --- */
+.sp-bar {
+  display: none;
+}
+
+/* --- 18. 見本サイト用のお知らせ --- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  z-index: 90;
+  padding: 14px 28px;
+  background-color: var(--ink);
+  color: var(--white);
+  font-size: 0.85rem;
+  opacity: 0;
+  translate: -50% 20px;
+  pointer-events: none;
+  transition: opacity 0.4s, translate 0.4s var(--ease);
+}
+
+.toast.is-show {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* --- 19. 一番上の金色の線（読んだ割合） --- */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  width: 100%;
+  height: 2px;
+  background-color: var(--gold);
+  transform-origin: left;
+  transform: scaleX(var(--progress, 0));
+}
+
+/* =========================================
+   画面の幅に合わせた調整（レスポンシブ対応）
+   ========================================= */
+
+.pc-only {
+  display: inline;
+}
+
+/* --- タブレット・小さいパソコン（幅 1080px 以下）：メニューを三本線にまとめる --- */
+@media (max-width: 1080px) {
+  .header {
+    padding: 14px 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* メニューは画面全体に広がる */
+  .nav {
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    background-color: rgba(253, 252, 250, 0.97);
+    clip-path: circle(0 at calc(100% - 42px) 36px);
+    visibility: hidden;
+    transition: clip-path 0.8s var(--ease), visibility 0s 0.8s;
+  }
+
+  body.menu-open .nav {
+    clip-path: circle(150% at calc(100% - 42px) 36px);
+    visibility: visible;
+    transition: clip-path 0.8s var(--ease), visibility 0s;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--mincho);
+    font-size: 1.1rem;
+  }
+
+  /* メニューを開いたら、1つずつ順番に出てくる */
+  .nav ul li {
+    opacity: 0;
+    translate: 0 16px;
+    transition: opacity 0.5s, translate 0.5s var(--ease);
+  }
+
+  body.menu-open .nav ul li {
+    opacity: 1;
+    translate: 0 0;
+    transition-delay: calc(0.15s + var(--n, 0) * 0.05s);
+  }
+
+  body.menu-open {
+    overflow: hidden; /* メニューを開いている間は、うしろがスクロールしない */
+  }
+}
+
+/* --- タブレット（幅 900px 以下） --- */
+@media (max-width: 900px) {
+  section {
+    padding: 100px 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 110px 24px 100px;
+    text-align: center;
+  }
+
+  .hero-text {
+    order: 2;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-image .arch {
+    width: min(360px, 80%);
+    height: 460px;
+  }
+
+  .hero-vertical,
+  .scroll-down {
+    display: none;
+  }
+
+  .pc-only {
+    display: none;
+  }
+
+  .news-inner,
+  .concept-inner,
+  .first-inner,
+  .access-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .concept-image .arch {
+    width: min(380px, 85%);
+    height: 480px;
+    margin: 0 auto;
+  }
+
+  .first-head {
+    position: static;
+  }
+
+  .first-image {
+    aspect-ratio: 16 / 10;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .doctor-card {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 28px;
+  }
+
+  .doctor-name {
+    width: 180px;
+    margin: 0 auto;
+  }
+}
+
+/* --- スマホ（幅 600px 以下） --- */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+    padding-bottom: 60px; /* 下の予約ボタンの分あける */
+  }
+
+  .container,
+  .container.narrow {
+    width: calc(100% - 40px);
+  }
+
+  .logo-en {
+    font-size: 0.9rem;
+  }
+
+  .hero .btn {
+    min-width: 0;
+    flex: 1;
+    padding: 14px 16px;
+  }
+
+  .hero-image .arch {
+    height: 400px;
+  }
+
+  .news-list li {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .price-row {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: 0.85rem;
+  }
+
+  .price-row .dots {
+    display: none;
+  }
+
+  .price-row .yen {
+    margin-left: auto;
+  }
+
+  .hours {
+    font-size: 0.75rem;
+  }
+
+  .hours tbody th {
+    font-size: 0.7rem;
+  }
+
+  /* 画面下に固定の予約ボタン */
+  .sp-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr;
+    background-color: var(--white);
+    box-shadow: 0 -1px 0 var(--greige-dark);
+    translate: 0 100%;
+    transition: translate 0.5s var(--ease);
+  }
+
+  .sp-bar.is-show {
+    translate: 0 0;
+  }
+
+  .sp-bar a {
+    display: grid;
+    place-items: center;
+    height: 60px;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .sp-bar a + a {
+    border-left: 1px solid var(--greige);
+  }
+
+  .sp-bar .gold {
+    background-color: var(--gold);
+    color: #fff;
+  }
+
+  .toast {
+    bottom: 80px;
+    width: calc(100% - 40px);
+    text-align: center;
+  }
+}
+
+/* =========================================
+   動き（アニメーション）
+   ========================================= */
+
+/* --- オープニング：英字のロゴが浮かび、金色の線が伸びて、ふわっと消える --- */
+#opening {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background-color: var(--white);
+  animation: openingOut 1s var(--ease) 2s forwards;
+}
+
+.opening-inner {
+  text-align: center;
+}
+
+.opening-en {
+  margin: 0 0 16px;
+  font-family: var(--en);
+  font-weight: 300;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  line-height: 1.4;
+  letter-spacing: 0.35em;
+  animation: openingText 1.4s var(--ease) 0.2s both;
+}
+
+.opening-line {
+  display: block;
+  width: 120px;
+  height: 1px;
+  margin: 0 auto;
+  background-color: var(--gold);
+  transform-origin: center;
+  animation: openingLine 1s var(--ease) 0.8s both;
+}
+
+@keyframes openingText {
+  from { opacity: 0; letter-spacing: 0.6em; filter: blur(6px); }
+  to   { opacity: 1; letter-spacing: 0.35em; filter: blur(0); }
+}
+
+@keyframes openingLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes openingOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* --- トップ：文字が順番に、ぼかしから浮かび上がる --- */
+@keyframes softUp {
+  from { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.hero-en      { animation: softUp 1.4s var(--ease) 2.4s both; }
+.hero h1      { animation: softUp 1.4s var(--ease) 2.6s both; }
+.hero-lead    { animation: softUp 1.4s var(--ease) 2.8s both; }
+.hero-buttons { animation: softUp 1.4s var(--ease) 3s both; }
+.hero-vertical,
+.scroll-down  { animation: softUp 1.4s var(--ease) 3.4s both; }
+.header       { animation: fadeIn 1.2s var(--ease) 2.6s both; }
+
+/* ヘッダーは隠れる動き（transform）を使うので、透明度だけで出す */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* トップの写真は、下から上へ幕が開くように現れる */
+.hero .img-reveal {
+  animation: archReveal 1.8s var(--ease) 2.2s both;
+}
+
+.hero .img-reveal img {
+  animation: heroZoom 8s var(--ease) 2.2s both;
+}
+
+@keyframes archReveal {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.25); }
+  to   { transform: scale(1); }
+}
+
+/* --- スクロールして画面に入ったら表示（script.js と連動） --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  transition-delay: var(--delay, 0s);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 写真は、幕が開くように現れる */
+.img-reveal:not(.hero .img-reveal) {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.6s var(--ease);
+}
+
+.img-reveal:not(.hero .img-reveal) img {
+  scale: 1.2;
+  transition: scale 2s var(--ease);
+}
+
+.img-reveal.is-visible {
+  clip-path: inset(0 0 0 0) !important;
+}
+
+.img-reveal.is-visible img {
+  scale: 1 !important;
+}
+
+/* --- 「動きを減らす」設定の人には、動きを止める（やさしさ対応） --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  #opening {
+    display: none;
+  }
+
+  .reveal,
+  .img-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
