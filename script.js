@@ -169,3 +169,67 @@ async function loadNews() {
 }
 
 loadNews();
+
+// --- お問い合わせフォーム：Google フォームに送る ---
+// ▼ Google フォームの「事前入力したURL」からわかる、送り先と各項目の番号を入れます。
+//   空のままなら送信されず、「見本サイトです」のお知らせが出ます。
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScgiELNOjB4mdJCId9XrqPbh0EW2xpZPlCn-K_FMWHMxLIwpg/formResponse';
+const FORM_FIELDS = {
+  name: 'entry.1857026686',    // お名前
+  email: 'entry.898107338',    // メールアドレス
+  tel: 'entry.948347038',      // 電話番号
+  kind: 'entry.101444983',     // ご相談の種類
+  message: 'entry.588597065',  // ご相談内容
+};
+
+const contactForm = document.querySelector('#contact-form');
+
+if (contactForm) {
+  const errorBox = contactForm.querySelector('.form-error');
+  const doneBox = document.querySelector('.contact-done');
+  const sendBtn = contactForm.querySelector('button[type="submit"]');
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.textContent = '';
+
+    // 入力もれ・メールアドレスの形をチェック
+    contactForm.querySelectorAll('[aria-invalid]').forEach((f) => f.removeAttribute('aria-invalid'));
+    const bad = [...contactForm.elements].filter((f) => f.willValidate && !f.checkValidity());
+    if (bad.length) {
+      bad.forEach((f) => f.setAttribute('aria-invalid', 'true'));
+      errorBox.textContent = '入力されていない項目、または形がちがう項目があります。';
+      bad[0].focus();
+      return;
+    }
+
+    // Google フォームとつなぐ前は、送らずにお知らせだけ出す
+    if (!FORM_ACTION) {
+      toast.textContent = 'ポートフォリオ用の見本サイトのため、まだ送信はされません。';
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-show'), 3000);
+      return;
+    }
+
+    const data = new FormData(contactForm);
+    const body = new URLSearchParams();
+    Object.entries(FORM_FIELDS).forEach(([key, entry]) => {
+      if (entry) body.append(entry, data.get(key) || '');
+    });
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = '送信中…';
+    try {
+      // Google フォームは返事の中身を見せてくれないので、送れたら完了とみなす
+      await fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body });
+      contactForm.hidden = true;
+      doneBox.hidden = false;
+      doneBox.focus();
+    } catch {
+      errorBox.textContent = '送信できませんでした。通信の状態を確かめて、もう一度お試しください。';
+      sendBtn.disabled = false;
+      sendBtn.textContent = '送信する';
+    }
+  });
+}

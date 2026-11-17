@@ -219,6 +219,7 @@ section {
   padding: 0;
   list-style: none;
   font-size: 0.82rem;
+  white-space: nowrap; /* 文字の途中で折り返さない */
 }
 
 /* リンクの下に、金色の線が真ん中から広がる */
@@ -988,6 +989,160 @@ body.menu-open .menu-toggle span:nth-child(2) { top: 22px; transform: rotate(-20
   color: var(--ink);
 }
 
+/* --- 15-2. お問い合わせ --- */
+.contact {
+  background-color: var(--greige);
+}
+
+.contact-lead {
+  margin: -16px 0 48px;
+  font-size: 0.9rem;
+}
+
+.contact-form {
+  display: grid;
+  gap: 28px;
+  padding: 48px;
+  background-color: var(--white);
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field label,
+.field legend {
+  padding: 0;
+  font-family: var(--mincho);
+  font-size: 0.92rem;
+}
+
+/* 「必須」「任意」の小さな印 */
+.req,
+.opt {
+  margin-left: 10px;
+  padding: 1px 8px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  vertical-align: 2px;
+}
+
+.req {
+  background-color: var(--gold);
+  color: #fff;
+}
+
+.opt {
+  border: 1px solid var(--greige-dark);
+  color: var(--sub);
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--greige-dark);
+  border-radius: 0;
+  background-color: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px; /* 16px 未満だと、iPhone で入力するときに画面が拡大されてしまう */
+  line-height: 1.7;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.field textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(179, 149, 102, 0.18);
+}
+
+/* 入力もれがあるとき */
+.field [aria-invalid="true"] {
+  border-color: #b4553f;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: 10px;
+}
+
+.choices label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.choices input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--gold);
+}
+
+.form-error {
+  margin: 0;
+  color: #b4553f;
+  font-size: 0.85rem;
+}
+
+.form-error:empty {
+  display: none;
+}
+
+.contact-form .small {
+  margin: 0;
+}
+
+.contact-form .btn {
+  justify-self: center;
+  min-width: 240px;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.contact-form .btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* 送信したあとに出るメッセージ */
+.contact-done {
+  padding: 56px 24px;
+  background-color: var(--white);
+  text-align: center;
+  outline: none;
+}
+
+.contact-done h3 {
+  margin: 0 0 16px;
+  font-size: 1.4rem;
+}
+
+.contact-done p:last-child {
+  margin: 0;
+}
+
 /* --- 16. フッター --- */
 .footer {
   padding: 56px 24px 40px;
@@ -1049,8 +1204,8 @@ body.menu-open .menu-toggle span:nth-child(2) { top: 22px; transform: rotate(-20
   display: inline;
 }
 
-/* --- タブレット・小さいパソコン（幅 1080px 以下）：メニューを三本線にまとめる --- */
-@media (max-width: 1080px) {
+/* --- タブレット・小さいパソコン（幅 1240px 以下）：メニューを三本線にまとめる --- */
+@media (max-width: 1240px) {
   .header {
     padding: 14px 20px;
   }
@@ -1181,6 +1336,11 @@ body.menu-open .menu-toggle span:nth-child(2) { top: 22px; transform: rotate(-20
 
 /* --- スマホ（幅 600px 以下） --- */
 @media (max-width: 600px) {
+  .contact-form {
+    gap: 24px;
+    padding: 32px 20px;
+  }
+
   body {
     font-size: 14px;
     padding-bottom: 60px; /* 下の予約ボタンの分あける */
