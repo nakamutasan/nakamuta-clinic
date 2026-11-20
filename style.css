@@ -1583,3 +1583,15 @@ body.menu-open .menu-toggle span:nth-child(2) { top: 22px; transform: rotate(-20
     scroll-behavior: auto;
   }
 }
+
+/* --- 2回目からは、オープニングを飛ばしてすぐ表示（index.html の opened と連動） --- */
+html.opened #opening { display: none; }
+html.opened .hero-en { animation-delay: 0.2s; }
+html.opened .hero h1 { animation-delay: 0.4s; }
+html.opened .hero-lead { animation-delay: 0.6s; }
+html.opened .hero-buttons { animation-delay: 0.8s; }
+html.opened .hero-vertical,
+html.opened .scroll-down { animation-delay: 1.2s; }
+html.opened .header { animation-delay: 0.4s; }
+html.opened .hero .img-reveal,
+html.opened .hero .img-reveal img { animation-delay: 0s; }

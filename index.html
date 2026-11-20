@@ -5,11 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中牟田美容クリニック | 心斎橋の美容皮膚科</title>
   <meta name="description" content="大阪・心斎橋の美容皮膚科、中牟田美容クリニック（ポートフォリオ用の架空のクリニックです）。ていねいなカウンセリングで、一人ひとりの肌に合わせた美容医療をご提案します。">
+  <!-- 見本サイトなので、Google などの検索結果には出さない（URL を知っている人は見られます） -->
+  <meta name="robots" content="noindex">
+
+  <!-- 検索エンジン向け：このアドレスが正式なページです -->
+  <link rel="canonical" href="https://nakamuta-clinic.vercel.app/">
+
+  <!-- サイトのアイコン（ブラウザのタブ・スマホのホーム画面に出る） -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#f3efe9">
+
+  <!-- SNS用の情報：LINE や Instagram でアドレスを送ると、写真つきのカードで表示される -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="中牟田美容クリニック">
+  <meta property="og:title" content="中牟田美容クリニック | 心斎橋の美容皮膚科">
+  <meta property="og:description" content="大阪・心斎橋の美容皮膚科、中牟田美容クリニック（ポートフォリオ用の架空のクリニックです）。ていねいなカウンセリングで、一人ひとりの肌に合わせた美容医療をご提案します。">
+  <meta property="og:url" content="https://nakamuta-clinic.vercel.app/">
+  <meta property="og:image" content="https://nakamuta-clinic.vercel.app/images/ogp.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 構造化データ：お店などの情報を Google が読み取りやすい形で書いたもの（住所・電話は架空です） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "name": "中牟田美容クリニック",
+    "description": "大阪・心斎橋の美容皮膚科（ポートフォリオ用の架空のクリニックです）。",
+    "medicalSpecialty": "Dermatologic",
+    "telephone": "06-0000-0000",
+    "address": {
+      "@type": "PostalAddress",
+      "postalCode": "542-0085",
+      "addressRegion": "大阪府",
+      "addressLocality": "大阪市中央区",
+      "streetAddress": "心斎橋筋0-0-0 3F",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "10:00",
+        "closes": "14:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "15:00",
+        "closes": "19:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Sunday"
+        ],
+        "opens": "15:00",
+        "closes": "17:00"
+      }
+    ],
+    "url": "https://nakamuta-clinic.vercel.app/",
+    "image": "https://nakamuta-clinic.vercel.app/images/ogp.jpg"
+  }
+  </script>
   <!-- 文字のデザイン（Google Fonts） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- オープニング演出は、この端末で初めて開いたときだけ。2回目からは飛ばす -->
+  <script>
+    try {
+      if (localStorage.getItem('nakamuta-opened')) document.documentElement.classList.add('opened');
+      else localStorage.setItem('nakamuta-opened', '1');
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 

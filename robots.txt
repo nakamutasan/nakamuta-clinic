@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nakamuta-clinic.vercel.app/sitemap.xml
